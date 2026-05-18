@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "name": "Create a todo cli app",
+    "priority": "high",
+    "due": "2026-05-16",
+    "status": "todo"
+  },
+  {
+    "id": 2,
+    "name": "Pet my cat",
+    "priority": "high",
+    "due": "2026-05-16",
+    "status": "completed"
+  }
+]

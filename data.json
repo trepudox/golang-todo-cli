@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "name": "Create a todo cli app",
+    "priority": "high",
+    "due": "2026-05-16",
+    "status": "todo"
+  },
+  {
+    "id": 2,
+    "name": "Pet my cat",
+    "priority": "high",
+    "due": "2026-05-17",
+    "status": "completed"
+  },
+  {
+    "id": 3,
+    "name": "Go Around Auction",
+    "priority": "medium",
+    "due": "2026-05-30",
+    "status": "todo"
+  },
+  {
+    "id": 4,
+    "name": "Learn Golang",
+    "priority": "low",
+    "due": "2026-12-20",
+    "status": "todo"
+  }
+]
