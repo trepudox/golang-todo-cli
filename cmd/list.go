@@ -41,7 +41,7 @@ Flags:
 		return nil
 	},
 	Run: func(cmd *cobra.Command, args []string) {
-		tasks, err := repository.ReadData()
+		tasks, err := repository.GetAllTasks()
 		if err != nil {
 			log.Fatalf("Error: %v", err)
 		}

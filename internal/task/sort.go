@@ -84,13 +84,13 @@ func sortByDue(tasks []Task, ascending bool) {
 	slices.SortFunc(tasks, func(t1, t2 Task) int {
 		t1Date, err := time.Parse("2006-01-02", t1.Due)
 		if err != nil {
-			fmt.Printf("failed to sort tasks by date. error: failed to parse due date of task ID '%d': %w", t1.Id, err)
+			fmt.Printf("failed to sort tasks by date. error: failed to parse due date of task ID '%d'", t1.Id)
 			return 0
 		}
 
 		t2Date, err := time.Parse("2006-01-02", t2.Due)
 		if err != nil {
-			fmt.Printf("failed to sort tasks by date. error: failed to parse due date of task ID '%d': %w", t2.Id, err)
+			fmt.Printf("failed to sort tasks by date. error: failed to parse due date of task ID '%d'", t2.Id)
 			return 0
 		}
 
