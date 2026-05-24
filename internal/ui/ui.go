@@ -8,7 +8,8 @@ import (
 	"fmt"
 	"os"
 	"text/tabwriter"
-	"trepudox/golang-todo-cli/internal/task"
+
+	"github.com/trepudox/golang-todo-cli/internal/task"
 )
 
 const minWidth int = 0

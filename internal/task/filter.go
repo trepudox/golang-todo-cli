@@ -1,3 +1,7 @@
+/*
+Copyright © 2026 trepudox <teoaa2@gmail.com>
+*/
+
 package task
 
 import (

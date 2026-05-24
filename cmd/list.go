@@ -7,9 +7,10 @@ package cmd
 import (
 	"fmt"
 	"log"
-	"trepudox/golang-todo-cli/internal/repository"
-	"trepudox/golang-todo-cli/internal/task"
-	"trepudox/golang-todo-cli/internal/ui"
+
+	"github.com/trepudox/golang-todo-cli/internal/repository"
+	"github.com/trepudox/golang-todo-cli/internal/task"
+	"github.com/trepudox/golang-todo-cli/internal/ui"
 
 	"github.com/spf13/cobra"
 )
@@ -28,10 +29,10 @@ Usage examples:
   golang-todo-cli list --sort-desc priority - Sort descendingly by priority level (from high to low)
 
 Flags:
-  --status    string    Filter by status (todo, completed)
-  --priority  string    Filter by priority level (low, medium, high)
-  --sort-asc  string    Sort tasks in ascending order by the specified field
-  --sort-desc string    Sort tasks in descending order by the specified field`,
+  --status    string   Filter by status (todo, completed)
+  --priority  string   Filter by priority level (low, medium, high)
+  --sort-asc  string   Sort tasks in ascending order by the specified field
+  --sort-desc string   Sort tasks in descending order by the specified field`,
 	Args: cobra.NoArgs,
 	PreRunE: func(cmd *cobra.Command, args []string) error {
 		if cmd.Flags().Changed("sort-desc") {

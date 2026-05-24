@@ -1,4 +1,4 @@
-module trepudox/golang-todo-cli
+module github.com/trepudox/golang-todo-cli
 
 go 1.26.3
 
