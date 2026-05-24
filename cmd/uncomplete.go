@@ -19,7 +19,7 @@ var uncompleteCmd = &cobra.Command{
 This change the task status from 'completed' back to 'todo', allowing you to work on it again.
 
 Usage examples:
-  golang-todo-cli uncomplete <task-id> - Revert a specific task`,
+  golang-todo-cli uncomplete <task-id>   - Revert a specific task`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("uncomplete called")
 	},

@@ -19,8 +19,8 @@ var deleteCmd = &cobra.Command{
 Warning: This action cannot be undone. The task will be deleted completely.
 
 Usage examples:
-  golang-todo-cli delete <task-id>      - Delete a specific task by ID
-  golang-todo-cli delete --all          - Remove all tasks (use with caution)
+  golang-todo-cli delete <task-id>   - Delete a specific task by ID
+  golang-todo-cli delete --all       - Remove all tasks (use with caution)
 
 Flags:
   --all Delete all tasks`,

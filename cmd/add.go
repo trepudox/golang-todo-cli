@@ -22,8 +22,8 @@ Usage examples:
   golang-todo-cli add "Finish report" --due 2026-12-31   - Add with due date
 
 Flags:
-  --priority string   Set task priority (low, medium, high)
-  --due      string   Set a due date for the task`,
+  --priority string   Set task priority (low, medium, high) (default "medium")
+  --due      string   Set a due date for the task (default "today")`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("add called")
 	},

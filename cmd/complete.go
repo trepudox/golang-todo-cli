@@ -17,11 +17,11 @@ var completeCmd = &cobra.Command{
 	Long: `Mark one or all tasks as completed in your todo list.
 
 Usage examples:
-  golang-todo-cli complete <task-id>       - Complete a specific task by ID
-  golang-todo-cli complete --all           - Mark all pending tasks as done
+  golang-todo-cli complete <task-id>   - Complete a specific task by ID
+  golang-todo-cli complete --all       - Mark all pending tasks as done
 
 Flags:
-  --all Complete all tasks`,
+  --all   Complete all tasks`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("complete called")
 	},

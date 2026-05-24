@@ -22,11 +22,11 @@ var listCmd = &cobra.Command{
 	Long: `List all tasks from your todo list, with optional filtering and/or sorting.
 
 Usage examples:
-  golang-todo-cli list                      - Show all tasks
-  golang-todo-cli list --status todo        - Show only pending tasks
-  golang-todo-cli list --priority high      - Filter by priority level
-  golang-todo-cli list --sort-asc name      - Sort ascendingly by name (from Z to A)
-  golang-todo-cli list --sort-desc priority - Sort descendingly by priority level (from high to low)
+  golang-todo-cli list                        - Show all tasks
+  golang-todo-cli list --status todo          - Show only pending tasks
+  golang-todo-cli list --priority high        - Filter by priority level
+  golang-todo-cli list --sort-asc name        - Sort ascendingly by name (from Z to A)
+  golang-todo-cli list --sort-desc priority   - Sort descendingly by priority level (from high to low)
 
 Flags:
   --status    string   Filter by status (todo, completed)
