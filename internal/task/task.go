@@ -10,11 +10,21 @@ import (
 )
 
 type Task struct {
-	Id       int    `json:"id"`
+	Id       uint16 `json:"id"`
 	Name     string `json:"name"`
 	Priority string `json:"priority"`
 	Due      string `json:"due"`
 	Status   string `json:"status"`
+}
+
+func NewTask(name, priority, due, status string) Task {
+	return Task{
+		Id:       0,
+		Name:     name,
+		Priority: priority,
+		Due:      due,
+		Status:   status,
+	}
 }
 
 func FormatDueDate(taskDue string) (string, error) {

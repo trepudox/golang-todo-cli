@@ -24,7 +24,21 @@
     "id": 4,
     "name": "Learn Golang",
     "priority": "low",
-    "due": "2026-12-20",
+    "due": "2026-06-20",
+    "status": "todo"
+  },
+  {
+    "id": 5,
+    "name": "teste",
+    "priority": "medium",
+    "due": "2026-05-24",
+    "status": "todo"
+  },
+  {
+    "id": 6,
+    "name": "teste",
+    "priority": "medium",
+    "due": "2026-05-24",
     "status": "todo"
   }
 ]

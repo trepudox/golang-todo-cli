@@ -43,10 +43,10 @@ func SortTasks(tasks []Task, fieldName string, ascending bool) error {
 func sortById(tasks []Task, ascending bool) {
 	slices.SortFunc(tasks, func(t1, t2 Task) int {
 		if ascending {
-			return t1.Id - t2.Id
+			return int(t1.Id - t2.Id)
 		}
 
-		return t2.Id - t1.Id
+		return int(t2.Id - t1.Id)
 	})
 }
 

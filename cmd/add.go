@@ -6,8 +6,12 @@ package cmd
 
 import (
 	"fmt"
+	"log"
+	"time"
 
 	"github.com/spf13/cobra"
+	"github.com/trepudox/golang-todo-cli/internal/repository"
+	"github.com/trepudox/golang-todo-cli/internal/task"
 )
 
 // addCmd represents the add command
@@ -24,21 +28,43 @@ Usage examples:
 Flags:
   --priority string   Set task priority (low, medium, high) (default "medium")
   --due      string   Set a due date for the task (default "today")`,
+	Args: cobra.ExactArgs(1),
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		switch priority {
+		case "low", "medium", "high":
+			break
+		default:
+			return fmt.Errorf("invalid priority: value must be 'low', 'medium' or 'high'\n")
+		}
+
+		_, err := time.Parse("2006-01-02", due)
+		if err != nil {
+			return fmt.Errorf("invalid due date: value must be in the following format: 'YYYY-MM-DD'. error: %s\n", err.Error())
+		}
+
+		return nil
+	},
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("add called")
+		taskName := args[0]
+		newTask := task.NewTask(taskName, priority, due, "todo")
+
+		_, err := repository.AddTask(newTask)
+		if err != nil {
+			log.Fatalf("Error: %v", err)
+		}
+
+		fmt.Printf("task '%s' added sucessfully\n\n", taskName)
+
+		listCmd.Run(listCmd, nil)
 	},
 }
+
+var priority string
+var due string
 
 func init() {
 	rootCmd.AddCommand(addCmd)
 
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// addCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// addCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	addCmd.Flags().StringVarP(&priority, "priority", "p", "medium", "Add with priority (low, medium or high)")
+	addCmd.Flags().StringVarP(&due, "due", "d", time.Now().Format("2006-01-02"), "Add with due date (example: 2026-05-24)")
 }

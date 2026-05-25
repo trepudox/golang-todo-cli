@@ -23,7 +23,7 @@ func GetAllTasks() ([]task.Task, error) {
 
 	// cria o slice e passa a referencia dele pro Unmarshal
 	var tasks []task.Task
-	if err := json.Unmarshal(jsonfile, &tasks); err != nil {
+	if err = json.Unmarshal(jsonfile, &tasks); err != nil {
 		return nil, fmt.Errorf("failed to parse the jsonfile: %w", err)
 	}
 
@@ -36,10 +36,19 @@ func AddTask(t task.Task) ([]task.Task, error) {
 		return nil, fmt.Errorf("failed to add task: %s", err.Error())
 	}
 
-	return append(tasks, t), nil
+	if err = assignNewTaskId(&t); err != nil {
+		return nil, fmt.Errorf("failed to assign an id to new task: %s", err.Error())
+	}
+
+	tasks = append(tasks, t)
+	if err = writeData(tasks); err != nil {
+		return nil, fmt.Errorf("failed to save data: %s", err.Error())
+	}
+
+	return tasks, nil
 }
 
-func RemoveTaskById(id int) ([]task.Task, error) {
+func RemoveTaskById(id uint16) ([]task.Task, error) {
 	tasks, err := GetAllTasks()
 	if err != nil {
 		return nil, fmt.Errorf("failed to remove task: %s", err.Error())
@@ -61,10 +70,14 @@ func RemoveTaskById(id int) ([]task.Task, error) {
 		return nil, fmt.Errorf("failed to remove task: no task with ID '%d'", id)
 	}
 
+	if err = writeData(tasks); err != nil {
+		return nil, fmt.Errorf("failed to save data: %s", err.Error())
+	}
+
 	return tasks, nil
 }
 
-func ChangeTaskStatusById(id int, status string) ([]task.Task, error) {
+func ChangeTaskStatusById(id uint16, status string) ([]task.Task, error) {
 	tasks, err := GetAllTasks()
 	if err != nil {
 		return nil, fmt.Errorf("failed to change task status: %s", err.Error())
@@ -80,19 +93,40 @@ func ChangeTaskStatusById(id int, status string) ([]task.Task, error) {
 	}
 
 	if !found {
-		return nil, fmt.Errorf("failed to chage task status: no task with ID '%d'", id)
+		return nil, fmt.Errorf("failed to change task status: no task with ID '%d'", id)
+	}
+
+	if err = writeData(tasks); err != nil {
+		return nil, fmt.Errorf("failed to save data: %s", err.Error())
 	}
 
 	return tasks, nil
 }
 
-func WriteData(tasks []task.Task) error {
+func assignNewTaskId(t *task.Task) error {
+	tasks, err := GetAllTasks()
+	if err != nil {
+		return err
+	}
+
+	var biggestId uint16 = 0
+	for _, tt := range tasks {
+		if tt.Id > biggestId {
+			biggestId = tt.Id
+		}
+	}
+
+	t.Id = biggestId + 1
+	return nil
+}
+
+func writeData(tasks []task.Task) error {
 	stringJson, err := json.Marshal(tasks)
 	if err != nil {
 		return fmt.Errorf("failed to parse json: %w", err)
 	}
 
-	if err := os.WriteFile(jsonPath, stringJson, 0o666); err != nil {
+	if err = os.WriteFile(jsonPath, stringJson, 0o666); err != nil {
 		return fmt.Errorf("failed to write json at path '%s'", jsonPath)
 	}
 
