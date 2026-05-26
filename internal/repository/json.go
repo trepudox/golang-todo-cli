@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"slices"
 
 	"github.com/trepudox/golang-todo-cli/internal/task"
 )
@@ -54,19 +55,12 @@ func RemoveTaskById(id uint16) ([]task.Task, error) {
 		return nil, fmt.Errorf("failed to remove task: %s", err.Error())
 	}
 
-	found := false
-	for i, t := range tasks {
-		if found {
-			tasks[i-1] = tasks[i]
-			continue
-		}
+	tasksOriginalLen := len(tasks)
+	tasks = slices.DeleteFunc(tasks, func(t task.Task) bool {
+		return t.Id == id
+	})
 
-		if t.Id == id {
-			found = true
-		}
-	}
-
-	if !found {
+	if tasksOriginalLen == len(tasks) {
 		return nil, fmt.Errorf("failed to remove task: no task with ID '%d'", id)
 	}
 
