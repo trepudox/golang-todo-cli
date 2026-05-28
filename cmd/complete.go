@@ -6,24 +6,47 @@ package cmd
 
 import (
 	"fmt"
+	"log"
+	"strconv"
 
 	"github.com/spf13/cobra"
+	"github.com/trepudox/golang-todo-cli/internal/repository"
 )
 
 // completeCmd represents the complete command
 var completeCmd = &cobra.Command{
 	Use:   "complete",
 	Short: "Mark a task as completed",
-	Long: `Mark one or all tasks as completed in your todo list.
+	Long: `Mark a task as completed in your todo list.
 
 Usage examples:
-  golang-todo-cli complete <task-id>   - Complete a specific task by ID
-  golang-todo-cli complete --all       - Mark all pending tasks as done
+  golang-todo-cli complete <task-id>   - Complete a specific task by ID`,
+  	Args: cobra.ExactArgs(1),
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		if len(args) == 0 {
+			return fmt.Errorf("invalid usage: you must specify a task id to complete")
+		}
 
-Flags:
-  --all   Complete all tasks`,
+		if _, err := strconv.ParseUint(args[0], 10, 16); err != nil {
+			return err
+		}
+
+		return nil
+	},
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("complete called")
+		arg := args[0]
+
+		id, err := strconv.ParseUint(arg, 10, 16)
+		if err != nil {
+			log.Fatalf(err.Error())
+		}
+
+		_, err = repository.ChangeTaskStatusById(uint16(id), "completed")
+		if err != nil {
+			log.Fatalf("Error: %s", err.Error())
+		}
+
+		listCmd.Run(listCmd, nil)
 	},
 }
 

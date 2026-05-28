@@ -78,9 +78,9 @@ func ChangeTaskStatusById(id uint16, status string) ([]task.Task, error) {
 	}
 
 	found := false
-	for _, t := range tasks {
-		if t.Id == id {
-			t.Status = status
+	for i := range tasks {
+		if tasks[i].Id == id {
+			tasks[i].Status = status
 			found = true
 			break
 		}
