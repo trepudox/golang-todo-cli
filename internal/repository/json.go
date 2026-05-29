@@ -71,6 +71,43 @@ func RemoveTaskById(id uint16) ([]task.Task, error) {
 	return tasks, nil
 }
 
+func EditTaskById(id uint16, name string, priority string, date string) ([]task.Task, error) {
+	tasks, err := GetAllTasks()
+	if err != nil {
+		return nil, fmt.Errorf("failed to change task status: %s", err.Error())
+	}
+
+	var found = false
+	for i := 0; i < len(tasks); i++ {
+		if tasks[i].Id == id {
+			if name != "" {
+				tasks[i].Name = name
+			}
+
+			if priority != "" {
+				tasks[i].Priority = priority
+			}
+
+			if date != "" {
+				tasks[i].Due = date
+			}
+
+			found = true
+			break
+		}
+	}
+
+	if !found {
+		return nil, fmt.Errorf("failed to change task status: no task with ID '%d'", id)
+	}
+
+	if err = writeData(tasks); err != nil {
+		return nil, fmt.Errorf("failed to save data: %s", err.Error())
+	}
+
+	return tasks, nil
+}
+
 func ChangeTaskStatusById(id uint16, status string) ([]task.Task, error) {
 	tasks, err := GetAllTasks()
 	if err != nil {
@@ -78,7 +115,7 @@ func ChangeTaskStatusById(id uint16, status string) ([]task.Task, error) {
 	}
 
 	found := false
-	for i := range tasks {
+	for i := 0; i < len(tasks); i++ {
 		if tasks[i].Id == id {
 			tasks[i].Status = status
 			found = true
